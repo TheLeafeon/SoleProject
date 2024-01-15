@@ -17,14 +17,19 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 0.0f;
     public float playerJumpPower = 0.0f;
     private bool isFly = false;
+    public int playerMaxHp = 5;
+    int playerNowHp;
+    
+
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        playerNowHp = playerMaxHp;
 
-        
+
     }
 
     // Update is called once per frame
@@ -84,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
             if (rayHit.collider != null)
             {
-                if (rayHit.distance < 0.6f)
+                if (rayHit.distance < 1.0f)
                 {
                     UnityEngine.Debug.Log(rayHit.collider.name);
                     isFly = false;
@@ -93,5 +98,15 @@ public class PlayerController : MonoBehaviour
         }
             
         
+    }
+
+
+    public void ChangeHp(int amount)
+    {
+        
+
+        playerNowHp= Mathf.Clamp(playerNowHp + amount, 0, playerMaxHp);
+        UnityEngine.Debug.Log(playerNowHp + "/" + playerMaxHp);
+
     }
 }

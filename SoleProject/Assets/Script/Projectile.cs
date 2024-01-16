@@ -8,6 +8,8 @@ public class Projectile : MonoBehaviour
     //1데미지를 준다.
     public int projectileDamage = -1;
 
+    public AudioClip hitClip;
+
     void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -32,7 +34,7 @@ public class Projectile : MonoBehaviour
         if (p != null)
         {
             UnityEngine.Debug.Log("Projectile Collision with " + other.gameObject);
-            p.ChangeHp(projectileDamage);
+            p.ChangeHp(projectileDamage, hitClip);
         }
         Destroy(gameObject);
     }

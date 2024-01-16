@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5159938409338643665
 SpriteRenderer:
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileDamage: -1
+  hitClip: {fileID: 8300000, guid: 4b473eeba14bb774d9d6ff2dea99a903, type: 3}
 --- !u!50 &-6597498333053752551
 Rigidbody2D:
   serializedVersion: 4

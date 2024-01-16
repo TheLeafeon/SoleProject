@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigidbody2d;
     SpriteRenderer spriteRenderer;
     Animator animator;
+    //효과음
+    AudioSource audioSource;
 
     //Vector2 lookDirection = new Vector2(1, 0);
 
@@ -19,7 +21,12 @@ public class PlayerController : MonoBehaviour
     private bool isFly = false;
     public int playerMaxHp = 5;
     int playerNowHp;
-    
+    public float timeInvincible = 1.0f;
+    bool isInvincible;
+    float invinsibleTimer=0.0f;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +35,8 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         playerNowHp = playerMaxHp;
-
+        isInvincible = false;
+        audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -48,6 +56,18 @@ public class PlayerController : MonoBehaviour
             rigidbody2d.AddForce(Vector2.up * playerJumpPower, ForceMode2D.Impulse);
             
             UnityEngine.Debug.Log("Jump");
+        }
+
+
+        //무적체크
+        if(isInvincible)
+        {
+            invinsibleTimer -= Time.deltaTime;
+
+            if(invinsibleTimer < 0)
+            {
+                isInvincible = false;
+            }
         }
 
     }
@@ -101,12 +121,39 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void ChangeHp(int amount)
+    public void ChangeHp(int amount, AudioClip clip)
     {
-        
 
-        playerNowHp= Mathf.Clamp(playerNowHp + amount, 0, playerMaxHp);
-        UnityEngine.Debug.Log(playerNowHp + "/" + playerMaxHp);
+        if (amount < 0)
+        {
+            if(isInvincible)
+            {
+                return;
+            }
 
+            playerNowHp = Mathf.Clamp(playerNowHp + amount, 0, playerMaxHp);
+            UnityEngine.Debug.Log(playerNowHp + "/" + playerMaxHp);
+            isInvincible = true;
+            invinsibleTimer = timeInvincible;
+
+            PlaySound(clip);
+
+            StartCoroutine(DamageEffect());
+        }
+    }
+
+    //피격시 깜빡임
+    IEnumerator DamageEffect()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(0.2f);
+
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }

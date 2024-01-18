@@ -11,6 +11,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     BoxCollider2D boxCollider2d;
 
+    public float dropDelay=0.0f;
 
     void Awake()
     {
@@ -38,7 +39,7 @@ public class NewBehaviourScript : MonoBehaviour
         while (true)
         {
             DropProjectile();
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(dropDelay);
             
         }
     }

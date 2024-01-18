@@ -34,7 +34,9 @@ public class Projectile : MonoBehaviour
         if (p != null)
         {
             UnityEngine.Debug.Log("Projectile Collision with " + other.gameObject);
-            p.ChangeHp(projectileDamage, hitClip);
+
+                p.ChangeHp(projectileDamage, hitClip);
+
         }
         Destroy(gameObject);
     }

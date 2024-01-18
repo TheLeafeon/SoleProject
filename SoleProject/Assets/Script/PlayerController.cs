@@ -136,22 +136,31 @@ public class PlayerController : MonoBehaviour
             isInvincible = true;
             invinsibleTimer = timeInvincible;
 
-
-
             //체력UI 변경
             UIHpBar.instance.SetHp(playerNowHp);
-
 
             //효과음 출력
             if (audioSource != null)
             {
                 PlaySound(clip);
             }
-
-            
-
             //반짝임
             StartCoroutine(DamageEffect());
+        }
+        else
+        {
+            
+
+            //효과음 출력
+            if (audioSource != null)
+            {
+                PlaySound(clip);
+            }
+            playerNowHp = Mathf.Clamp(playerNowHp + amount, 0, playerMaxHp);
+            UnityEngine.Debug.Log(playerNowHp + "/" + playerMaxHp);
+
+            //체력UI 변경
+            UIHpBar.instance.SetHp(playerNowHp);
         }
     }
 

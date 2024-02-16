@@ -5,55 +5,36 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    public static GameManager Instance;
 
-    public bool openUI = false;
-    public GameObject menu_Panel;
-    public GameObject soundMenu_Panel;
+    public float backgroundSound_Volume = 1.0f;
+    public float effectSound_Volume = 1.0f;
 
+    public GameObject soundUI;
+
+    bool isOpenUI = false;
+
+    void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+           UnityEngine.Debug.LogWarning("씬에 두개 이상의 게임 매니저가 존재합니다!");
+           Destroy(gameObject);
+        
+        }
+    }
 
     void Update()
     {
-
-        if (Input.GetButtonDown("Cancel"))
+        if(!isOpenUI && Input.GetButtonDown("Cancel")) 
         {
-            if(!openUI)
-            {
-                OpenMenu();
-            }
-            else if(openUI && menu_Panel.activeSelf) 
-            {
-                Close_Menu();
-            }
-            else if(openUI && soundMenu_Panel.activeSelf)
-            {
-                Close_SoundMenu();
-            }
-                    
-        }
-
-        if(openUI && !menu_Panel.activeSelf && !soundMenu_Panel.activeSelf)
-        {
-            openUI = false;
+            UnityEngine.Debug.Log("UI오픈");
+            isOpenUI = true;
         }
     }
 
-    void Close_SoundMenu()
-    {
-        UnityEngine.Debug.Log("soundMenu Close");
-        soundMenu_Panel.SetActive(false);
-        openUI = false;
-
-    }
-    void Close_Menu()
-    {
-        UnityEngine.Debug.Log("menu Close");
-        menu_Panel.SetActive(false);
-        openUI = false;
-    }
-    void OpenMenu()
-    {
-        UnityEngine.Debug.Log("menu Open");
-        menu_Panel.SetActive(true);
-        openUI = true;
-    }
 }

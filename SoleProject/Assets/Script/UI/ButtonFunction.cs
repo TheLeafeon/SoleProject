@@ -7,8 +7,13 @@ public class ButtonFunction : MonoBehaviour
 {
     public void MoveScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
-        UnityEngine.Debug.Log(sceneName);
+       if(SceneManager.GetActiveScene().name  != sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+            UnityEngine.Debug.Log(sceneName);
+        }
+
+        
     }
 
     public void OpenPanel(GameObject PanelName)

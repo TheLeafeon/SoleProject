@@ -16,6 +16,14 @@ public class ButtonFunction : MonoBehaviour
         
     }
 
+    public void ReOpenScene(string sceneName)
+    {
+        
+            SceneManager.LoadScene(sceneName);
+            UnityEngine.Debug.Log(sceneName);
+
+    }
+
     public void OpenPanel(GameObject PanelName)
     {
         if(!PanelName.activeSelf)

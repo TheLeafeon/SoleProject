@@ -13,7 +13,10 @@ public class PlayerController : MonoBehaviour
     //효과음
     AudioSource audioSource;
 
-    //Vector2 lookDirection = new Vector2(1, 0);
+
+    //게임오버 패널
+    public GameObject gameoverPanel;
+
 
     //캐릭터 스테이터스
     public float playerSpeed = 0.0f;
@@ -24,6 +27,8 @@ public class PlayerController : MonoBehaviour
     public float timeInvincible = 1.0f;
     bool isInvincible;
     float invinsibleTimer=0.0f;
+
+    
 
 
 
@@ -43,19 +48,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //방향전환
-        if(Input.GetButton("Horizontal"))
-        {
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
-        }
 
-        //점프
-        if (Input.GetButtonDown("Jump") && !isFly)
+        if (playerNowHp > 0)
         {
-            isFly = true;
-            rigidbody2d.AddForce(Vector2.up * playerJumpPower, ForceMode2D.Impulse);
-            
-            UnityEngine.Debug.Log("Jump");
+            //방향전환
+            if (Input.GetButton("Horizontal"))
+            {
+                spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+            }
+
+            //점프
+            if (Input.GetButtonDown("Jump") && !isFly)
+            {
+                isFly = true;
+                rigidbody2d.AddForce(Vector2.up * playerJumpPower, ForceMode2D.Impulse);
+
+                UnityEngine.Debug.Log("Jump");
+            }
         }
 
 
@@ -74,45 +83,49 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //float vertical = Input.GetAxis("Vertical");
-        float horizontal = Input.GetAxis("Horizontal");
-       
 
-        //Vector2 position = rigidbody2d.position;
-
-        Vector2 move = new Vector2(horizontal, rigidbody2d.velocity.y);
-
-        if (!Mathf.Approximately(move.x, 0.0f))
+        if (playerNowHp > 0)
         {
-            //lookDirection.x = move.x;
-            
-            //lookDirection.Normalize();
-        }
-        if(Mathf.Abs(move.x)>0.3f)
-        {
-            animator.SetBool("isWalk", true);
-        }
-        else
-        {
-            animator.SetBool("isWalk", false);
-        }
-
-        rigidbody2d.velocity = new Vector2(move.x * playerSpeed, rigidbody2d.velocity.y);
+            //float vertical = Input.GetAxis("Vertical");
+            float horizontal = Input.GetAxis("Horizontal");
 
 
-        //점프 감지
-        if(rigidbody2d.velocity.y < 0.0f)
-        {
-            UnityEngine.Debug.DrawRay(rigidbody2d.position, Vector3.down, new Color(0, 1, 0));
+            //Vector2 position = rigidbody2d.position;
 
-            RaycastHit2D rayHit = Physics2D.Raycast(rigidbody2d.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+            Vector2 move = new Vector2(horizontal, rigidbody2d.velocity.y);
 
-            if (rayHit.collider != null)
+            if (!Mathf.Approximately(move.x, 0.0f))
             {
-                if (rayHit.distance < 1.0f)
+                //lookDirection.x = move.x;
+
+                //lookDirection.Normalize();
+            }
+            if (Mathf.Abs(move.x) > 0.3f)
+            {
+                animator.SetBool("isWalk", true);
+            }
+            else
+            {
+                animator.SetBool("isWalk", false);
+            }
+
+            rigidbody2d.velocity = new Vector2(move.x * playerSpeed, rigidbody2d.velocity.y);
+
+
+            //점프 감지
+            if (rigidbody2d.velocity.y < 0.0f)
+            {
+                UnityEngine.Debug.DrawRay(rigidbody2d.position, Vector3.down, new Color(0, 1, 0));
+
+                RaycastHit2D rayHit = Physics2D.Raycast(rigidbody2d.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+
+                if (rayHit.collider != null)
                 {
-                    UnityEngine.Debug.Log(rayHit.collider.name);
-                    isFly = false;
+                    if (rayHit.distance < 1.0f)
+                    {
+                        UnityEngine.Debug.Log(rayHit.collider.name);
+                        isFly = false;
+                    }
                 }
             }
         }
@@ -146,6 +159,11 @@ public class PlayerController : MonoBehaviour
             }
             //반짝임
             StartCoroutine(DamageEffect());
+
+            if(playerNowHp <= 0)
+            {
+                gameoverPanel.SetActive(true);
+            }
         }
         else
         {

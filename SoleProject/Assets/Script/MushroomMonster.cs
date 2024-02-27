@@ -11,10 +11,17 @@ public class MushroomMonster : MonoBehaviour
     bool isMonsterActive = false;
     public float monsterLockDirection = 0.0f;
 
+    Animator animator;
+
+    void Awake()
+    {
+        rigidbody2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2d = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -43,7 +50,23 @@ public class MushroomMonster : MonoBehaviour
             rigidbody2d.velocity = new Vector2(move.x * monsterSpeed, rigidbody2d.velocity.y);
         }
     }
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        PlayerController p = other.collider.GetComponent<PlayerController>();
+
+        if (p != null)
+        {
+            UnityEngine.Debug.Log("MushroomMonster_Head Collision with " + other.gameObject);
+
+            isMonsterActive = false;
+
+            p.LaunchCharacter(10.0f);
+
+            animator.SetBool("isAlive", false);
+
+            
+        }
+    }
 
 
-    
 }

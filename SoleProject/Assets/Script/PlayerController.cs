@@ -196,4 +196,13 @@ public class PlayerController : MonoBehaviour
     {
         audioSource.PlayOneShot(clip);
     }
+
+    //몬스터 밟았을때 살짝 점프
+    public void LaunchCharacter(float launchPower)
+    {
+        isFly = true;
+        rigidbody2d.AddForce(Vector2.up * launchPower, ForceMode2D.Impulse);
+
+        UnityEngine.Debug.Log("Launch");
+    }
 }

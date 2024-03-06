@@ -7,6 +7,10 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameManager gameManager;
+
+
+
     Rigidbody2D rigidbody2d;
     SpriteRenderer spriteRenderer;
     Animator animator;
@@ -28,10 +32,8 @@ public class PlayerController : MonoBehaviour
     bool isInvincible;
     float invinsibleTimer=0.0f;
 
-    
-
-
-
+    //스테이지 확인용 변수
+    public int StageData;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerNowHp > 0)
         {
+            
             //방향전환
             if (Input.GetButton("Horizontal"))
             {
@@ -64,6 +67,13 @@ public class PlayerController : MonoBehaviour
                 rigidbody2d.AddForce(Vector2.up * playerJumpPower, ForceMode2D.Impulse);
 
                 UnityEngine.Debug.Log("Jump");
+            }
+
+            //대화
+            if (Input.GetButtonDown("Next"))
+            {
+                gameManager.Action(StageData);
+                UnityEngine.Debug.Log("Next");
             }
         }
 

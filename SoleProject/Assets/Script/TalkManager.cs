@@ -14,7 +14,7 @@ public class TalkManager : MonoBehaviour
 
     void GenerateData()
     {
-        talkData.Add(1, new string[] { "어서와", "여긴 1스테이지야" });
+        talkData.Add(1, new string[] { "어서와", "여긴 1스테이지야", "저기 오른쪽 맵 끝까지 가면 다음 스테이지로 갈 수 있어", "행운을 빌어" });
 
     }
 

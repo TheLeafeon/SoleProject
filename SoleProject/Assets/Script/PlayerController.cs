@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     bool isInvincible;
     float invinsibleTimer=0.0f;
 
+    Vector2 lookDirection = new Vector2(1, 0);
+
     //스테이지 확인용 변수
     public int StageData;
 
@@ -53,15 +55,14 @@ public class PlayerController : MonoBehaviour
 
         if (playerNowHp > 0)
         {
-            
             //방향전환
-            if (Input.GetButton("Horizontal"))
+            if (Input.GetButton("Horizontal") && !gameManager.isAction)
             {
                 spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
             }
 
             //점프
-            if (Input.GetButtonDown("Jump") && !isFly)
+            if (Input.GetButtonDown("Jump") && !isFly && !gameManager.isAction)
             {
                 isFly = true;
                 rigidbody2d.AddForce(Vector2.up * playerJumpPower, ForceMode2D.Impulse);
@@ -72,7 +73,15 @@ public class PlayerController : MonoBehaviour
             //대화
             if (Input.GetButtonDown("Next"))
             {
-                gameManager.Action(StageData);
+                UnityEngine.Debug.DrawRay(rigidbody2d.position, lookDirection, new Color(0, 1, 0));
+
+                RaycastHit2D rayHit = Physics2D.Raycast(rigidbody2d.position, lookDirection, 1, LayerMask.GetMask("Npc"));
+
+                if (rayHit.collider != null)
+                {
+                    UnityEngine.Debug.Log(rayHit.collider.name);
+                    gameManager.Action(rayHit.collider.gameObject);
+                }
                 UnityEngine.Debug.Log("Next");
             }
         }
@@ -97,7 +106,7 @@ public class PlayerController : MonoBehaviour
         if (playerNowHp > 0)
         {
             //float vertical = Input.GetAxis("Vertical");
-            float horizontal = Input.GetAxis("Horizontal");
+            float horizontal = gameManager.isAction ? 0 :  Input.GetAxis("Horizontal");
 
 
             //Vector2 position = rigidbody2d.position;
@@ -106,9 +115,8 @@ public class PlayerController : MonoBehaviour
 
             if (!Mathf.Approximately(move.x, 0.0f))
             {
-                //lookDirection.x = move.x;
-
-                //lookDirection.Normalize();
+                lookDirection.Set(move.x, move.y);
+                lookDirection.Normalize();
             }
             if (Mathf.Abs(move.x) > 0.3f)
             {
@@ -118,6 +126,8 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("isWalk", false);
             }
+
+
 
             rigidbody2d.velocity = new Vector2(move.x * playerSpeed, rigidbody2d.velocity.y);
 

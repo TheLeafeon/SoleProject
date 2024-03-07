@@ -9,12 +9,35 @@ public class GameManager : MonoBehaviour
     public TalkManager talkManager;
     public GameObject talkPanel;
     public TextMeshProUGUI talkText;
+    public bool isAction;
+    public int talkIndex;
 
-    public void Action(int StageNumber)
+
+    public void Action(GameObject scanNpc)
     {
 
-        talkText.text = "스테이지 " + StageNumber + " 입니다.";
+            NpcManager npcManager = scanNpc.GetComponent<NpcManager>();
+            Talk(npcManager.id);
+
+        talkPanel.SetActive(isAction);
     }
     
 
+
+    void Talk(int id)
+    {
+        string talkData = talkManager.GetTalk(id, talkIndex);
+
+        if(talkData == null)
+        {
+            isAction = false;
+            talkIndex = 0;
+            return;
+        }
+
+        talkText.text = talkData;
+
+        isAction = true;
+        talkIndex++;
+    }
 }

@@ -10,7 +10,7 @@ public class Monster_BodyAttack : MonoBehaviour
     public int monster_AttackDamage = -1;
     public AudioClip hitClip;
 
-
+    public bool trigger = false;
 
     void Awake()
     {
@@ -24,7 +24,20 @@ public class Monster_BodyAttack : MonoBehaviour
 
         if (p != null)
         {
-            UnityEngine.Debug.Log(" Collision with " + other.gameObject);
+            UnityEngine.Debug.Log(" OnCollisionEnter2D With" + other.gameObject);
+
+            p.ChangeHp(monster_AttackDamage, hitClip);
+
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        PlayerController p = other.GetComponent<PlayerController>();
+
+        if (p != null)
+        {
+            UnityEngine.Debug.Log(" OnTriggerEnter2D With " + other.gameObject);
 
             p.ChangeHp(monster_AttackDamage, hitClip);
 

@@ -25,11 +25,6 @@ public class MushroomMonster : MonoBehaviour
         lookDirection.x = monsterLockDirection;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -71,7 +66,7 @@ public class MushroomMonster : MonoBehaviour
         //플레이어 충돌
         PlayerController p = other.collider.GetComponent<PlayerController>();
 
-        if (p != null)
+        if (p != null && isMonsterActive)
         {
             UnityEngine.Debug.Log("MushroomMonster_Head Collision with " + other.gameObject);
 

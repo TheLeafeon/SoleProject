@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (rayHit.distance < 1.0f)
                     {
-                        UnityEngine.Debug.Log(rayHit.collider.name);
+                        
                         isFly = false;
                     }
                 }
@@ -225,4 +225,16 @@ public class PlayerController : MonoBehaviour
 
         UnityEngine.Debug.Log("Launch");
     }
+
+    //한번 더 점프 가능
+    public void MoreJump()
+    {
+        isFly=false;
+    }
+
+    public bool GetisFly()
+    {
+        return isFly;
+    }
+
 }

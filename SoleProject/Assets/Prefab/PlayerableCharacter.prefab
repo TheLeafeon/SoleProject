@@ -101,10 +101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd7a474bf7de4145835e0cb32315354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  gameoverPanel: {fileID: 0}
   playerSpeed: 5
   playerJumpPower: 20
   playerMaxHp: 5
   timeInvincible: 1
+  StageData: 0
 --- !u!50 &5800284359955057703
 Rigidbody2D:
   serializedVersion: 4
@@ -197,18 +200,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.25, y: 0.5}
-      - {x: -0.25, y: 0.5}
-      - {x: -0.39, y: 0.37}
-      - {x: -0.39, y: -0.13}
-      - {x: -0.25, y: -0.26}
-      - {x: -0.12, y: -0.26}
-      - {x: -0.12, y: -0.51}
-      - {x: 0.12, y: -0.51}
-      - {x: 0.12, y: -0.26}
-      - {x: 0.25, y: -0.26}
-      - {x: 0.39, y: -0.13}
-      - {x: 0.39, y: 0.37}
+    - - {x: -0.065, y: -0.5}
+      - {x: 0.065, y: -0.5}
+      - {x: 0.38, y: -0.13}
+      - {x: 0.38, y: 0.5}
+      - {x: -0.38, y: 0.5}
+      - {x: -0.38, y: -0.13}
   m_UseDelaunayMesh: 0
 --- !u!82 &-2122140177354225260
 AudioSource:

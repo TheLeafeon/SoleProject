@@ -49,18 +49,18 @@ public class BirdMonster : MonoBehaviour
     {
         startLocation = m_tr.position;
 
-        patrolLocation = m_tr.position;
+        
 
-        patrolLocation.x = patrolLocation.x + (patrolRange * monsterLockDirection);
+        patrolLocation.x = startLocation.x + (patrolRange * monsterLockDirection);
+        // -2.73+ (5 * -1) = -2.73 + -5 = -7.73
 
         //처음에 방향 전환
-        if(lookDirection.x < 0.0f)
-        {
-            spriteRenderer.flipX = lookDirection.x == 1.0f;
-        }
+        spriteRenderer.flipX = lookDirection.x == 1.0f;
 
         UnityEngine.Debug.Log(startLocation.x);
         UnityEngine.Debug.Log(patrolLocation.x);
+
+
 
 
     }
@@ -71,14 +71,6 @@ public class BirdMonster : MonoBehaviour
         Vector2 move = new Vector2(lookDirection.x, rigidbody2d.velocity.y);
         rigidbody2d.velocity = new Vector2(move.x * monsterSpeed, rigidbody2d.velocity.y);
 
-        //if(m_tr.position.x == patrolLocation.x && !isArrive)
-        //{
-        //    Turn();
-        //}
-        //if (m_tr.position.x == startLocation.x && isArrive)
-        //{
-        //    Turn();
-        //}
 
         if (isArrive)
         {

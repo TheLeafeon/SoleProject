@@ -11,27 +11,29 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI talkText;
     public bool isAction;
     public int talkIndex;
-
+    NpcManager npcManager;
 
     public void Action(GameObject scanNpc)
     {
 
-            NpcManager npcManager = scanNpc.GetComponent<NpcManager>();
-            Talk(npcManager.id);
+        npcManager = scanNpc.GetComponent<NpcManager>();
+        Talk(npcManager.id);
 
         talkPanel.SetActive(isAction);
     }
-    
-
 
     void Talk(int id)
     {
         string talkData = talkManager.GetTalk(id, talkIndex);
+        
 
-        if(talkData == null)
+
+        //대화 끝나면
+        if (talkData == null)
         {
             isAction = false;
             talkIndex = 0;
+
             return;
         }
 

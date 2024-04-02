@@ -5,5 +5,4 @@ using UnityEngine;
 public class NpcManager : MonoBehaviour
 {
     public int id;
-
 }

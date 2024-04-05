@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     //캐릭터 스테이터스
     public float playerSpeed = 0.0f;
+    public float playerMaxSpeed = 0.0f;
     public float playerJumpPower = 0.0f;
     private bool isFly = false;
     public int playerMaxHp = 5;
@@ -235,6 +236,13 @@ public class PlayerController : MonoBehaviour
     public bool GetisFly()
     {
         return isFly;
+    }
+
+
+    public void  ChangePlayerSpeed(float speedVariation)
+    {
+        //playerNowHp = Mathf.Clamp(playerNowHp + amount, 0, playerMaxHp);
+        playerSpeed = Mathf.Clamp(playerSpeed + speedVariation, 0.1f, playerMaxSpeed);
     }
 
 }

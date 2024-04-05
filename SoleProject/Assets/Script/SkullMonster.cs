@@ -8,8 +8,10 @@ public class SkullMonster : MonoBehaviour
     Rigidbody2D rigidbody2d;
     SpriteRenderer spriteRenderer;
 
+    //플레이어 위치 확인
+    public GameObject playerCharacter;
+
     public float monsterSpeed = 0.0f;
-    bool isMonsterActive = true;
     Vector2 lookDirection = new Vector2 (1, 0);
     public int monster_AttackDamage = -1;
     public AudioClip hitClip;
@@ -32,30 +34,27 @@ public class SkullMonster : MonoBehaviour
 
     void Update()
     {
-        ////몬스터 비활성화 -> 활성화
-        //if (!isMonsterActive)
-        //{
-        //    UnityEngine.Debug.DrawRay(rigidbody2d.position, Vector3.down * 20, new Color(0, 1, 0));
-
-        //    //20은 대강의 수치
-        //    RaycastHit2D rayHit = Physics2D.Raycast(rigidbody2d.position, Vector3.down, 20, LayerMask.GetMask("Player"));
-
-        //    if (rayHit.collider != null)
-        //    {
-        //        UnityEngine.Debug.Log(rayHit.collider.name);
-        //        isMonsterActive = true;
-        //    }
-        //}
-        
-        //몬스터 활성화 상태에서 행동
-        if(isMonsterActive)
+        if (transform.position.x > playerCharacter.transform.position.x)
         {
-            Vector2 move = new Vector2(lookDirection.x, lookDirection.y);
-
-            rigidbody2d.velocity = new Vector2(move.x * monsterSpeed, lookDirection.y);
+            spriteRenderer.flipX = true;
+            lookDirection.x = -1.0f;
+        }
+        else if (transform.position.x < playerCharacter.transform.position.x )
+        {
+            spriteRenderer.flipX = false;
+            lookDirection.x = 1.0f;
         }
 
+ 
     }
+
+    void FixedUpdate()
+    {
+        Vector2 move = new Vector2(lookDirection.x, lookDirection.y);
+
+        rigidbody2d.velocity = new Vector2(move.x * monsterSpeed, lookDirection.y);
+    }
+
 
     void OnCollisionEnter2D(Collision2D other)
     {

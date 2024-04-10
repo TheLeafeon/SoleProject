@@ -664,7 +664,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Stage1Scene
+          m_StringArgument: Stage_Bird
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &119479654
@@ -12248,7 +12248,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3952214799277944022, guid: 0c8a7d2eed86a624aac3b6ce7728d888, type: 3}
       propertyPath: sceneName
-      value: TitleScene
+      value: Stage_Skull
       objectReference: {fileID: 0}
     - target: {fileID: 5042317677937260105, guid: 0c8a7d2eed86a624aac3b6ce7728d888, type: 3}
       propertyPath: m_RootOrder

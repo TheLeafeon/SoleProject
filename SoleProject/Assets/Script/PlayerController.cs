@@ -238,11 +238,11 @@ public class PlayerController : MonoBehaviour
         return isFly;
     }
 
-
+    //속도변경
     public void  ChangePlayerSpeed(float speedVariation)
     {
         //playerNowHp = Mathf.Clamp(playerNowHp + amount, 0, playerMaxHp);
-        playerSpeed = Mathf.Clamp(playerSpeed + speedVariation, 0.1f, playerMaxSpeed);
+        playerSpeed = Mathf.Clamp(playerSpeed + speedVariation, 1.0f, playerMaxSpeed);
     }
 
 }
